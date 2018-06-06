@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paint</title>
+    <script src="paint.js"></script>
+    <script>
+        tools.Rectangle = function(event, cx, onEnd) {
+            cx.lineCap = "round";
+
+            var pos = relativePos(event, cx.canvas);
+            var startX = pos.x;
+            var startY = pos.y;
+            trackDrag(function(event) {
+                pos = relativePos(event, cx.canvas);
+                cx.fillRect(pos.x, pos.y, startX - pos.x, startY - pos.y);
+            }, function(event) {
+
+            });
+        };
+
+        // the erasor tool
+        tools.Erase = function(event, cx) {
+            cx.globalCompositeOperation = "destination-out";
+            tools.Line(event, cx, function() {
+                cx.globalCompositeOperation = "source-over";
+            });
+        };
+    </script>
+</head>
+<body>
+<h4>Added rectangle exercise</h4>
+<script>
+    createPaint(document.body)
+</script>
+</body>
+</html>
